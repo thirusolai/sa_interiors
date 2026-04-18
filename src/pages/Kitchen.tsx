@@ -95,19 +95,19 @@ const slides = [
     id: 1,
     title: "Culinary Masterpieces",
     subtitle: "Bespoke modular kitchens designed for the modern lifestyle.",
-    img: "https://images.unsplash.com/photo-1556911223-e250e338d019?w=1600&q=80"
+    image: "https://i.pinimg.com/1200x/22/7b/3a/227b3aa23a1c86a6edb1d46fc45e280c.jpg"
   },
   {
     id: 2,
     title: "Sophisticated Storage",
     subtitle: "Luxury wardrobe solutions that define elegance and organization.",
-    img: "https://images.unsplash.com/photo-1595428774223-ef52624120ec?w=1600&q=80"
+    image: "https://i.pinimg.com/736x/14/70/a2/1470a2e8431ca81db6308fc134a8a168.jpg"
   },
   {
     id: 3,
     title: "Precision Craftsmanship",
     subtitle: "Where every detail is meticulously engineered for perfection.",
-    img: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80"
+    image: "https://i.pinimg.com/736x/dd/ea/b9/ddeab9133b3ea65545d7dd7e43827a2e.jpg"
   },
 ];
 
@@ -122,64 +122,78 @@ export default function Kitchen() {
     return () => clearInterval(interval);
   }, []);
 
+  const nextSlide = () => {
+    setCurrent((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
-        {slides.map((slide, idx) => (
-          <motion.div
+      <section className="w-full h-[80vh] min-h-[600px] mt-[72px] relative overflow-hidden flex items-center">
+        {/* Background Images */}
+        {slides.map((slide, index) => (
+          <div
             key={slide.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: current === idx ? 1 : 0 }}
-            transition={{ duration: 1.5 }}
-            className="absolute inset-0"
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              current === index ? "opacity-100" : "opacity-0"
+            }`}
           >
-            <img src={slide.img} className="w-full h-full object-cover brightness-[0.6]" alt={slide.title} />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
-          </motion.div>
+            <img 
+              src={slide.image} 
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/50"></div>
+          </div>
         ))}
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center px-6">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-[#d89a5b] text-xs md:text-sm tracking-[0.5em] uppercase font-bold mb-6"
-          >
+        <div className="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 transition-all duration-700 ease-in-out pt-16">
+          <p className="text-[#d89a5b] text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.5em] uppercase font-bold mb-4 drop-shadow-md">
             Luxury Modular Solutions
-          </motion.p>
-          <motion.h1 
-            key={slides[current].title}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-white font-brand text-5xl md:text-7xl lg:text-8xl lowercase italic mb-8"
-          >
+          </p>
+          <h1 className="text-[28px] sm:text-4xl md:text-6xl font-serif text-white uppercase tracking-wide leading-[1.1] md:leading-[1.2] mb-6 drop-shadow-md px-2">
             {slides[current].title}
-          </motion.h1>
-          <motion.p 
-            key={slides[current].subtitle}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light"
-          >
+          </h1>
+          <p className="text-white/90 text-[13px] md:text-xl mb-10 drop-shadow max-w-xl mx-auto px-4">
             {slides[current].subtitle}
-          </motion.p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-[#d89a5b] text-white px-10 py-4 text-[11px] font-black tracking-[0.2em] uppercase transition-all hover:bg-white hover:text-[#002121]">
+          </p>
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 w-full">
+            <button onClick={() => window.dispatchEvent(new CustomEvent("openConsultation"))} className="w-full sm:w-auto px-8 py-4 bg-[#d89a5b] text-white text-[11px] font-black tracking-[0.2em] uppercase hover:bg-white hover:text-[#002121] transition-all rounded-none drop-shadow-md text-center">
               Book Consultation
             </button>
-            <button className="border border-white/30 text-white px-10 py-4 text-[11px] font-black tracking-[0.2em] uppercase transition-all hover:bg-white/10">
-              View Collection
+            <button onClick={() => window.location.href = '/portfolio'} className="w-full sm:w-auto px-8 py-4 border border-white text-white text-[11px] font-black tracking-[0.2em] uppercase hover:bg-white hover:text-[#002121] transition-all rounded-none drop-shadow-md text-center bg-transparent">
+              View Portfolio
             </button>
           </div>
         </div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-10 flex gap-4">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrent(idx)}
-              className={`h-1 transition-all duration-500 ${current === idx ? "w-12 bg-[#d89a5b]" : "w-6 bg-white/30"}`}
+        {/* Navigation Arrows - Hidden on mobile to prevent text overlap */}
+        <button
+          onClick={prevSlide}
+          className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 bg-[#d89a5b] hover:bg-[#002121] text-white w-12 h-12 rounded-none transition-colors border border-transparent hover:border-[#d89a5b] items-center justify-center font-black"
+        >
+          ←
+        </button>
+        <button
+          onClick={nextSlide}
+          className="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 bg-[#d89a5b] hover:bg-[#002121] text-white w-12 h-12 rounded-none transition-colors border border-transparent hover:border-[#d89a5b] items-center justify-center font-black"
+        >
+          →
+        </button>
+
+        {/* Dots */}
+        <div className="absolute bottom-10 w-full flex justify-center gap-3">
+          {slides.map((_, index) => (
+            <div
+              key={index}
+              onClick={() => setCurrent(index)}
+              className={`h-2 rounded-full cursor-pointer transition-all duration-300 ${
+                current === index ? "w-8 bg-[#d89a5b]" : "w-2 bg-white/50 hover:bg-white/80"
+              }`}
             />
           ))}
         </div>
@@ -198,7 +212,7 @@ export default function Kitchen() {
               />
             </div>
             
-            <div className="order-1 lg:order-2">
+            <div className="order-1 lg:order-2 flex flex-col items-center lg:items-start text-center lg:text-left sm:px-6 lg:px-0">
               <motion.p
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -206,22 +220,22 @@ export default function Kitchen() {
               >
                 A Seamless Experience
               </motion.p>
-              <h2 className="text-4xl md:text-5xl font-brand text-[#002121] leading-tight mb-8">
-                Transforming Spaces with Precision <span className="italic opacity-50">& Grace.</span>
+              <h2 className="text-[32px] sm:text-4xl md:text-5xl font-serif text-[#002121] uppercase tracking-wide leading-[1.2] mb-6 md:mb-8">
+                Transforming Spaces with Precision
               </h2>
-              <p className="text-gray-600 text-lg leading-relaxed mb-10">
-                With SA Interiors, transforming your kitchen and wardrobe is as smooth an experience as sliding this bar. We handle the heavy lifting, while you prepare to walk into a masterpiece.
+              <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-10 max-w-lg lg:max-w-none">
+                Our modular setups combine immaculate storage solutions with compelling designs. Experience precision engineering meant to elevate the aesthetic and practical heart of your home.
               </p>
               
-              <div className="space-y-6">
-                <div className="flex items-center gap-4 border-l-2 border-[#d89a5b]/20 pl-6 py-2">
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#d89a5b] shadow-sm">
+              <div className="space-y-6 w-full max-w-sm lg:max-w-none">
+                <div className="flex flex-col lg:flex-row items-center lg:items-center gap-3 lg:gap-4 border-b-2 lg:border-b-0 lg:border-l-2 border-[#d89a5b]/20 pb-4 lg:pb-0 lg:pl-6 py-2 text-center lg:text-left">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#d89a5b] shadow-sm shrink-0">
                     <Maximize size={18} />
                   </div>
                   <span className="text-[#002121] font-bold tracking-widest text-[11px] uppercase">Space Optimization Experts</span>
                 </div>
-                <div className="flex items-center gap-4 border-l-2 border-[#d89a5b]/20 pl-6 py-2">
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#d89a5b] shadow-sm">
+                <div className="flex flex-col lg:flex-row items-center lg:items-center gap-3 lg:gap-4 border-b-2 lg:border-b-0 lg:border-l-2 border-[#d89a5b]/20 pb-4 lg:pb-0 lg:pl-6 py-2 text-center lg:text-left">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#d89a5b] shadow-sm shrink-0">
                     <CheckCircle2 size={18} />
                   </div>
                   <span className="text-[#002121] font-bold tracking-widest text-[11px] uppercase">Premium Hardware Warranty</span>
@@ -230,7 +244,7 @@ export default function Kitchen() {
 
               <button
                 onClick={() => navigate("/portfolio")}
-                className="mt-12 flex items-center gap-3 bg-[#002121] text-white px-10 py-5 text-[11px] font-black tracking-[0.2em] uppercase hover:bg-[#d89a5b] transition-all group shadow-xl"
+                className="mt-12 flex items-center justify-center gap-3 bg-[#002121] text-white px-8 md:px-10 py-5 w-full sm:w-auto text-[11px] font-black tracking-[0.2em] uppercase hover:bg-[#d89a5b] transition-all group shadow-xl"
               >
                 Explore Transformations <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
               </button>
@@ -239,35 +253,60 @@ export default function Kitchen() {
         </div>
       </section>
 
-      {/* Why Choose Us - Luxury Version */}
-      <section className="bg-white py-24 px-6 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <p className="text-[#d89a5b] text-[10px] tracking-[0.5em] uppercase font-bold mb-4">Quality & Trust</p>
-            <h2 className="text-4xl md:text-6xl font-brand text-[#002121] lowercase italic opacity-90">
-              Why Homeowners Choose SA Interiors
+      {/* Why Choose Us */}
+      <section className="bg-[#f6f3f2] py-24 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          
+          {/* LEFT SIDE */}
+          <div>
+            <p className="text-[#d89a5b] text-[10px] tracking-[0.5em] uppercase font-bold mb-4">
+              Quality & Trust
+            </p>
+
+            <h2 className="text-4xl md:text-5xl font-sans font-bold text-[#002121] uppercase tracking-wide leading-tight mb-6">
+              Why Choose SA Interiors
             </h2>
+
+            <p className="text-gray-600 mb-12 max-w-xl leading-relaxed">
+              We blend aesthetic elegance with functional precision to create spaces that are uniquely yours. Our turnkey process removes all the stress, giving you a seamless journey from the initial concept to the final handover.
+            </p>
+
+            {/* FEATURES */}
+            <div className="space-y-8">
+              {features.map((feature, index) => {
+                const Icon = feature.icon;
+                return (
+                  <div key={index} className="flex items-start gap-5">
+                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm shrink-0 border border-gray-100">
+                      <Icon className="w-5 h-5 text-[#d89a5b]" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#002121] uppercase tracking-widest text-[11px] mb-2">
+                        {feature.title}
+                      </h4>
+                      <p className="text-gray-500 text-sm leading-relaxed">
+                        {feature.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* CTA BUTTON */}
+            <button onClick={() => window.location.href = '/portfolio'} className="mt-12 inline-flex items-center gap-3 bg-[#002121] text-white px-8 py-5 text-[11px] font-black tracking-[0.2em] uppercase hover:bg-[#d89a5b] transition-all shadow-xl">
+              View Similar Projects
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-y-16 gap-x-12">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="group text-center"
-              >
-                <div className="w-16 h-16 mx-auto mb-8 relative">
-                  <div className="absolute inset-0 bg-[#d89a5b]/5 rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                  <div className="relative z-10 w-full h-full rounded-full border border-gray-100 flex items-center justify-center text-gray-700 bg-white group-hover:text-[#d89a5b] group-hover:border-[#d89a5b] transition-all duration-500">
-                    <feature.icon size={28} strokeWidth={1.5} />
-                  </div>
-                </div>
-                <h3 className="text-[#002121] text-[13px] font-bold tracking-[0.2em] uppercase mb-4">{feature.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed max-w-[250px] mx-auto">{feature.desc}</p>
-              </motion.div>
-            ))}
+          {/* RIGHT SIDE IMAGE */}
+          <div className="w-full h-full min-h-[500px] lg:min-h-[700px] rounded-none overflow-hidden relative shadow-xl">
+            <img 
+              src="https://i.pinimg.com/736x/71/61/8a/71618a99e90a7def78dd4e8416e51b83.jpg" 
+              alt="Beautiful Kitchen Interior"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+            />
           </div>
         </div>
       </section>
@@ -277,12 +316,12 @@ export default function Kitchen() {
         <div className="absolute inset-x-0 top-0 h-px bg-white/5" />
         <div className="max-w-[1600px] mx-auto text-center">
           <p className="text-[#d89a5b] text-[10px] tracking-[0.5em] uppercase font-bold mb-4">Our Methodology</p>
-          <h2 className="text-4xl md:text-6xl font-brand text-white lowercase italic mb-20">The Journey to Perfection</h2>
+          <h2 className="text-3xl md:text-5xl font-sans font-bold text-white uppercase tracking-wide mb-20">The Journey to Perfection</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-px bg-white/5 border border-white/5">
             {steps.map((step, index) => (
               <div key={index} className="bg-[#002121] p-10 group hover:bg-[#002a2a] transition-all duration-500 border border-white/5">
-                <div className="text-[#d89a5b] font-brand text-2xl mb-10 flex items-center justify-center gap-4">
+                <div className="text-[#d89a5b] font-sans font-bold text-2xl mb-10 flex items-center justify-center gap-4">
                   <span className="w-8 h-px bg-white/10 group-hover:w-12 group-hover:bg-[#d89a5b] transition-all" />
                   0{index + 1}
                 </div>
@@ -305,18 +344,18 @@ export default function Kitchen() {
       <section className="bg-white py-32 px-6 text-center border-t border-gray-100">
         <div className="max-w-4xl mx-auto">
           <p className="text-[#d89a5b] text-[10px] tracking-[0.5em] uppercase font-bold mb-6">Request Pricing</p>
-          <h2 className="text-5xl md:text-7xl font-brand text-[#002121] lowercase italic mb-10 leading-tight">
-            Ready to Design Your <span className="opacity-40 italic">Dream Kitchen?</span>
+          <h2 className="text-4xl md:text-6xl font-sans font-bold text-[#002121] uppercase tracking-wide mb-10 leading-tight">
+            READY TO DESIGN YOUR DREAM KITCHEN?
           </h2>
-          <p className="text-gray-500 text-lg md:text-xl font-light mb-16 max-w-2xl mx-auto leading-relaxed">
-            Every home is unique. Receive a personalized estimate for your kitchen and wardrobe project within 48 hours.
+          <p className="text-gray-500 text-lg md:text-xl font-medium mb-16 max-w-2xl mx-auto leading-relaxed">
+            Secure a fully transparent, personalized estimate for your new kitchen and wardrobe spaces. 
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <button className="bg-[#002121] text-white px-12 py-5 text-[11px] font-black tracking-[0.3em] uppercase hover:bg-[#d89a5b] transition-all shadow-2xl">
+            <button onClick={() => window.dispatchEvent(new CustomEvent("openConsultation"))} className="bg-[#002121] text-white px-12 py-5 text-[11px] font-black tracking-[0.3em] uppercase hover:bg-[#d89a5b] transition-all shadow-xl">
               Get Free Estimate
             </button>
-            <button className="border border-gray-200 text-[#002121] px-12 py-5 text-[11px] font-black tracking-[0.3em] uppercase hover:border-[#002121] transition-all">
-              Chat with Expert
+            <button onClick={() => window.location.href='/contact'} className="border border-gray-200 text-[#002121] px-12 py-5 text-[11px] font-black tracking-[0.3em] uppercase hover:border-[#002121] transition-all">
+              Talk to an Expert
             </button>
           </div>
         </div>

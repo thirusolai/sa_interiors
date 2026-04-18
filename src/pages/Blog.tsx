@@ -123,7 +123,7 @@ const Blog = () => {
                      
                      <p className="text-[#002121] text-[11px] font-black tracking-[0.5em] uppercase">Discovery & Innovation</p>
                   </div>
-                  <h1 className="text-6xl md:text-9xl font-sans font-light tracking-tighter leading-[0.85] text-[#002121]">
+                  <h1 className="text-5xl sm:text-6xl md:text-9xl font-sans font-light tracking-tighter leading-[0.85] text-[#002121]">
                     The <br />
                     <span className="font-bold relative">
                       Journal
@@ -162,20 +162,20 @@ const Blog = () => {
                   />
                   <div className="absolute inset-0 bg-[#002121]/5 group-hover:bg-transparent transition-colors" />
                 </div>
-                <div className="p-12 flex-1 flex flex-col justify-between">
+                <div className="p-6 sm:p-8 md:p-12 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-4 mb-8">
                        <span className="w-10 h-[1px] bg-[#965b32] opacity-40" />
                        <p className="text-[#965b32] text-[10px] font-bold tracking-[0.4em] uppercase">{blogPosts[0].category}</p>
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-sans font-light leading-[1.1] mb-8 tracking-tighter group-hover:text-[#965b32] transition-colors">
+                    <h2 className="text-[28px] sm:text-3xl md:text-5xl font-sans font-light leading-[1.1] mb-6 md:mb-8 tracking-tighter group-hover:text-[#965b32] transition-colors">
                       {blogPosts[0].title}
                     </h2>
-                    <p className="text-gray-500 text-lg leading-relaxed mb-10 font-light opacity-80">
+                    <p className="text-gray-500 text-base md:text-lg leading-relaxed mb-8 md:mb-10 font-light opacity-80">
                       {blogPosts[0].excerpt}
                     </p>
                   </div>
-                  <div className="flex items-center justify-between pt-10 border-t border-gray-50">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 sm:gap-0 pt-6 md:pt-10 border-t border-gray-50">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-none bg-[#002121] flex items-center justify-center text-xs font-bold text-white group-hover:bg-[#965b32] transition-colors">
                         {blogPosts[0].author.split(' ').pop()?.charAt(0)}
@@ -185,7 +185,7 @@ const Blog = () => {
                         <span className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-1">{blogPosts[0].readTime}</span>
                       </div>
                     </div>
-                    <div className="w-14 h-14 border border-gray-100 flex items-center justify-center group-hover:bg-[#002121] transition-all">
+                    <div className="w-14 h-14 border border-gray-100 flex items-center justify-center group-hover:bg-[#002121] transition-all shrink-0">
                        <ArrowRight className="w-5 h-5 text-[#965b32] group-hover:text-white transition-colors" />
                     </div>
                   </div>
@@ -210,11 +210,13 @@ const Blog = () => {
                     />
                     <div className="absolute inset-0 bg-[#002121]/5 group-hover:bg-transparent transition-colors" />
                   </div>
-                  <div className="p-10">
-                    <p className="text-[#965b32] text-[10px] font-bold tracking-[0.4em] uppercase mb-4">{post.category}</p>
-                    <h3 className="text-2xl font-sans font-light leading-snug mb-6 group-hover:text-[#965b32] transition-colors tracking-tight">
-                      {post.title}
-                    </h3>
+                  <div className="p-6 sm:p-8 md:p-10 flex-1 flex flex-col justify-between">
+                    <div>
+                      <p className="text-[#965b32] text-[10px] font-bold tracking-[0.4em] uppercase mb-4">{post.category}</p>
+                      <h3 className="text-xl md:text-2xl font-sans font-light leading-snug mb-6 group-hover:text-[#965b32] transition-colors tracking-tight">
+                        {post.title}
+                      </h3>
+                    </div>
                     <div className="flex items-center gap-4 text-gray-400 text-[10px] font-bold uppercase tracking-widest border-l-2 border-[#965b32]/20 pl-4">
                        <span>{post.author}</span>
                        <span className="w-1 h-1 rounded-full bg-gray-200" />
@@ -242,16 +244,16 @@ const Blog = () => {
                       />
                       <div className="absolute inset-0 bg-[#002121]/5 group-hover:bg-transparent transition-colors" />
                     </div>
-                    <div className="p-12 flex-1 flex flex-col justify-between">
+                    <div className="p-6 sm:p-8 md:p-12 flex-1 flex flex-col justify-between">
                        <div>
                          <p className="text-[#965b32] text-[10px] font-bold tracking-[0.4em] uppercase mb-4">{post.category}</p>
-                         <h3 className="text-3xl font-sans font-light leading-snug mb-8 group-hover:text-[#965b32] transition-colors tracking-tighter">
+                         <h3 className="text-[24px] md:text-3xl font-sans font-light leading-snug mb-8 group-hover:text-[#965b32] transition-colors tracking-tighter">
                            {post.title}
                          </h3>
                        </div>
-                       <div className="flex items-center justify-between pt-8 border-t border-gray-100">
+                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 sm:gap-0 pt-6 md:pt-8 border-t border-gray-100">
                           <span className="text-[11px] text-gray-400 font-bold uppercase tracking-[0.2em]">{post.readTime}</span>
-                          <div className="flex items-center gap-4 bg-[#002121] text-white px-8 py-4 text-[11px] font-black uppercase tracking-widest group-hover:bg-[#965b32] transition-colors">
+                          <div className="flex items-center justify-center gap-4 bg-[#002121] text-white px-6 py-4 md:px-8 md:py-4 text-[11px] font-black uppercase tracking-widest group-hover:bg-[#965b32] transition-colors w-full sm:w-auto">
                             Read Article <ArrowRight size={14} />
                           </div>
                        </div>
@@ -264,21 +266,21 @@ const Blog = () => {
 
         {/* Newsletter / CTA Section - Perfectly Matched Height & ALIGNMENT */}
         <ScrollReveal>
-          <div className="bg-[#002121] rounded-none p-16 md:p-32 relative overflow-hidden text-center shadow-[0_50px_100px_rgba(0,0,0,0.15)] border border-white/5">
+          <div className="bg-[#002121] rounded-none p-8 py-16 md:p-32 relative overflow-hidden text-center shadow-[0_50px_100px_rgba(0,0,0,0.15)] border border-white/5">
             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#d89a5b 0.5px, transparent 0.5px)', backgroundSize: '30px 30px' }} />
             
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-8xl font-sans font-light text-white mb-8 tracking-tighter leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-8xl font-sans font-light text-white mb-6 md:mb-8 tracking-tighter leading-tight">
                 Let's <span className="font-bold">Work Together</span>
               </h2>
-              <p className="text-white/40 mb-16 text-lg md:text-xl font-light tracking-[0.4em] max-w-2xl mx-auto leading-relaxed uppercase">
+              <p className="text-white/40 mb-12 md:mb-16 text-sm sm:text-lg md:text-xl font-light tracking-[0.2em] md:tracking-[0.4em] max-w-2xl mx-auto leading-relaxed uppercase">
                 Ready to transform your space
               </p>
 
-              <div className="max-w-2xl mx-auto flex flex-col items-center">
+              <div className="max-w-2xl mx-auto flex flex-col items-center w-full">
                 <button 
                   onClick={() => window.dispatchEvent(new CustomEvent("openConsultation"))}
-                  className="bg-[#d89a5b] text-white px-16 py-6 rounded-none font-black tracking-[0.4em] uppercase transition-all duration-500 hover:bg-white hover:text-[#002121] shadow-2xl"
+                  className="bg-[#d89a5b] text-white px-8 py-5 w-full sm:w-auto sm:px-16 sm:py-6 rounded-none font-black tracking-[0.2em] md:tracking-[0.4em] uppercase transition-all duration-500 hover:bg-white hover:text-[#002121] shadow-2xl text-[11px] md:text-base"
                 >
                   Get My Free Consultation
                 </button>
@@ -312,9 +314,9 @@ const Blog = () => {
             >
               <button
                 onClick={closePost}
-                className="absolute top-10 right-10 z-[110] w-12 h-12 flex items-center justify-center bg-[#002121] text-white hover:bg-[#8B2323] transition-all rounded-none border border-white/10"
+                className="absolute top-4 right-4 md:top-10 md:right-10 z-[110] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-[#002121] text-white hover:bg-[#8B2323] transition-all rounded-none border border-white/10 shadow-xl"
               >
-                <X size={24} />
+                <X size={20} className="md:w-6 md:h-6" />
               </button>
 
               <div className="overflow-y-auto flex-1">
@@ -327,41 +329,41 @@ const Blog = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
                   
-                  <div className="absolute bottom-12 left-12 right-12">
-                     <div className="flex items-center gap-4 mb-6">
-                        <span className="w-10 h-px bg-[#965b32]" />
-                        <span className="text-[#965b32] text-[10px] font-black tracking-[0.5em] uppercase">
+                  <div className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12">
+                     <div className="flex items-center gap-4 mb-4 md:mb-6">
+                        <span className="w-8 md:w-10 h-px bg-[#965b32]" />
+                        <span className="text-[#965b32] text-[9px] md:text-[10px] font-black tracking-[0.5em] uppercase">
                           Featured Insight
                         </span>
                      </div>
-                     <h2 className="text-4xl md:text-7xl font-sans font-bold text-[#002121] leading-[1.0] tracking-tighter max-w-4xl">
+                     <h2 className="text-[28px] sm:text-4xl md:text-7xl font-sans font-bold text-[#002121] leading-[1.1] md:leading-[1.0] tracking-tighter max-w-4xl">
                         {selectedPost.title}
                      </h2>
                   </div>
                 </div>
 
-                <div className="px-8 md:px-24 pb-24 pt-16">
+                <div className="px-6 md:px-24 pb-16 pt-8 md:pb-24 md:pt-16">
                    <div className="max-w-4xl">
-                     <div className="flex flex-wrap gap-8 mb-16 text-gray-400 text-[10px] font-bold tracking-[0.3em] uppercase border-y border-gray-100 py-6">
+                     <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-8 mb-10 md:mb-16 text-gray-400 text-[10px] font-bold tracking-[0.3em] uppercase border-y border-gray-100 py-6">
                         <div className="flex items-center gap-3">
                            <Calendar size={14} className="text-[#965b32]" />
                            {selectedPost.date}
                         </div>
-                        <div className="flex items-center gap-3 border-l border-gray-200 pl-8">
+                        <div className="flex items-center gap-3 md:border-l border-gray-200 md:pl-8">
                            <Clock size={14} className="text-[#965b32]" />
                            {selectedPost.readTime}
                         </div>
-                        <div className="flex items-center gap-3 border-l border-gray-200 pl-8">
+                        <div className="flex items-center gap-3 md:border-l border-gray-200 md:pl-8">
                            <MessageSquare size={14} className="text-[#965b32]" />
                            No Comments
                         </div>
                      </div>
 
-                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-20">
-                        <div className="space-y-12 text-[#002121] text-xl md:text-2xl font-light leading-[1.6]">
+                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 lg:gap-20">
+                        <div className="space-y-8 md:space-y-12 text-[#002121] text-lg md:text-2xl font-light leading-[1.7] md:leading-[1.6]">
                            {selectedPost.content.map((para, idx) => (
                               <p key={idx} className="first-letter:text-5xl first-letter:font-bold first-letter:float-left first-letter:mr-4 first-letter:mt-2 first-letter:text-[#965b32]">{para}</p>
-                           )).reduce((acc: any, curr, idx) => idx === 0 ? [curr] : [...acc, <p key={`p-${idx}`} className="text-[#002121] text-xl md:text-2xl font-light leading-[1.6]">{selectedPost.content[idx]}</p>], [])}
+                           )).reduce((acc: any, curr, idx) => idx === 0 ? [curr] : [...acc, <p key={`p-${idx}`} className="text-[#002121] text-lg md:text-2xl font-light leading-[1.7] md:leading-[1.6]">{selectedPost.content[idx]}</p>], [])}
                         </div>
 
                         {/* Author Sidebar */}
@@ -386,15 +388,15 @@ const Blog = () => {
               </div>
 
               {/* Action Bar */}
-              <div className="bg-[#002121] p-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                 <p className="text-white/40 text-[10px] font-bold tracking-[0.5em] uppercase">End of Insight ✦ TIQ Journal 2026</p>
-                 <div className="flex gap-4">
-                    <button className="px-10 py-4 border border-white/20 text-white text-[11px] font-black uppercase tracking-widest hover:bg-white hover:text-[#002121] transition-all">
+              <div className="bg-[#002121] p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+                 <p className="text-white/40 text-[9px] md:text-[10px] font-bold tracking-[0.4em] md:tracking-[0.5em] uppercase text-center md:text-left">End of Insight ✦ TIQ Journal 2026</p>
+                 <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                    <button className="px-10 py-4 border border-white/20 text-white text-[11px] font-black uppercase tracking-widest hover:bg-white hover:text-[#002121] transition-all w-full sm:w-auto">
                        Share
                     </button>
                     <button 
                      onClick={closePost}
-                     className="px-12 py-4 bg-[#d89a5b] text-white text-[11px] font-black uppercase tracking-widest hover:bg-white hover:text-[#002121] transition-all"
+                     className="px-12 py-4 bg-[#d89a5b] text-white text-[11px] font-black uppercase tracking-widest hover:bg-white hover:text-[#002121] transition-all shadow-lg w-full sm:w-auto"
                     >
                       Close Journal
                     </button>

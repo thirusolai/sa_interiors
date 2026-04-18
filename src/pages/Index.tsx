@@ -12,17 +12,24 @@ import ScrollReveal from "@/components/ScrollReveal";
 const heroImage = "../hero.jpg";
 const aboutImage = "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css";
+import "swiper/css/navigation";
 import CountUp from "react-countup";
 import { useNavigate } from "react-router-dom";
 import { CitiesIcon, ProjectsIcon, OngoingIcon, PartnersIcon, ExperienceIcon } from "@/components/StatIcons";
 import { DeliveryIcon, CostsIcon, WarrantyIcon, EMIIcon, MDFIcon, EstimateIcon, DesignerIcon, DesignIcon, ConsultIcon } from "@/components/TrustIcons";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import QuizComponent from "@/components/QuizComponent";
+
+// Preload heavy hero assets to drastically reduce LCP lag without altering original image paths
+if (typeof window !== "undefined") {
+  const heroPreload1 = new Image();
+  heroPreload1.src = "https://www.greenply.com:5001/originalfile1769165698904-875.jpg";
+  const heroPreload2 = new Image();
+  heroPreload2.src = "https://d3gq2merok8n5r.cloudfront.net/abhinav/ond-1634120396-Obfdc/amj-1649698066-erEC6/living-1649753968-lxcA4/living-dining-scene-1-1653286803-letfX.png";
+}
 
 
 const services = [
@@ -164,7 +171,7 @@ const StatItem = ({ stat, index }: { stat: any, index: number }) => {
           )}
         </span>
       </div>
-      
+
       <p className="text-white/60 text-[11px] tracking-[0.2em] uppercase font-medium">
         {stat.label}
       </p>
@@ -351,11 +358,13 @@ const Index = () => {
             }
           ].map((slide, idx) => (
             <SwiperSlide key={idx}>
-              <div className="relative h-full w-full">
+              <div className="relative h-full w-full bg-[#001c1c]">
                 {/* Background Image */}
                 <img
                   src={slide.img}
                   alt={slide.tag}
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  fetchPriority={idx === 0 ? "high" : "auto"}
                   className="absolute inset-0 w-full h-full object-cover brightness-[0.7]"
                 />
 
@@ -363,13 +372,13 @@ const Index = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
                 {/* Content */}
-                <div className="absolute inset-0 flex items-end px-8 md:px-20 pb-20 md:pb-16 z-10">
-                  <div className="max-w-4xl text-left">
+                <div className="absolute inset-0 flex items-end px-6 md:px-20 pb-12 md:pb-16 z-10">
+                  <div className="max-w-4xl text-left w-full">
                     <motion.p
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6 }}
-                      className="text-white/80 text-[10px] md:text-xs tracking-[0.3em] uppercase mb-4 font-bold font-sans"
+                      className="text-white/80 text-[10px] md:text-xs tracking-[0.3em] uppercase mb-3 md:mb-4 font-bold font-sans"
                     >
                       {slide.tag}
                     </motion.p>
@@ -378,7 +387,7 @@ const Index = () => {
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.2 }}
-                      className="text-white font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.2] mb-6 whitespace-pre-line"
+                      className="text-white font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.1] md:leading-[1.2] mb-4 md:mb-6 whitespace-pre-line"
                     >
                       {slide.title}
                     </motion.h1>
@@ -387,7 +396,7 @@ const Index = () => {
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.4 }}
-                      className="text-white/90 text-sm md:text-base leading-relaxed max-w-xl mb-10 font-medium font-sans"
+                      className="text-white/90 text-[13px] md:text-base leading-relaxed max-w-xl mb-8 md:mb-10 font-medium font-sans"
                     >
                       {slide.desc}
                     </motion.p>
@@ -396,39 +405,39 @@ const Index = () => {
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.6 }}
-                      className="flex flex-wrap items-center gap-4"
+                      className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-4"
                     >
                       <Link
                         to="/contact"
-                        className="bg-[#965b32] text-white px-10 py-4 rounded-none text-[11px] font-black tracking-[0.2em] uppercase hover:bg-white hover:text-[#002121] transition-all transform hover:scale-105"
+                        className="bg-[#965b32] text-white px-10 py-4 rounded-none text-[11px] font-black tracking-[0.2em] uppercase hover:bg-white hover:text-[#002121] transition-all transform hover:scale-105 w-full sm:w-auto text-center"
                       >
                         Start your project
                       </Link>
                       <Link
                         to="/portfolio"
-                        className="bg-[#1A1D20] text-white border border-white/5 px-10 py-4 rounded-none text-[11px] font-black tracking-[0.2em] uppercase hover:bg-white hover:text-[#002121] transition-all transform hover:scale-105"
+                        className="bg-[#1A1D20] text-white border border-white/5 px-10 py-4 rounded-none text-[11px] font-black tracking-[0.2em] uppercase hover:bg-white hover:text-[#002121] transition-all transform hover:scale-105 w-full sm:w-auto text-center"
                       >
                         View our work
                       </Link>
                     </motion.div>
 
-                    {/* Statistics Bar */}
+                    {/* Statistics Bar - Hidden on mobile to prevent vertical overflow */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.8 }}
-                      className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-6 text-white/70"
+                      className="mt-12 hidden lg:flex flex-wrap items-center gap-x-12 gap-y-6 text-white/70"
                     >
                       <div className="flex flex-col gap-1">
                         <span className="text-xl md:text-2xl font-serif text-white">500+</span>
                         <span className="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold text-[#d89a5b]">Spaces Transformed</span>
                       </div>
-                      <div className="w-px h-10 bg-white/10 hidden md:block" />
+                      <div className="w-px h-10 bg-white/10" />
                       <div className="flex flex-col gap-1">
                         <span className="text-xl md:text-2xl font-serif text-white">60 Days</span>
                         <span className="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold text-[#d89a5b]">Average Delivery</span>
                       </div>
-                      <div className="w-px h-10 bg-white/10 hidden md:block" />
+                      <div className="w-px h-10 bg-white/10" />
                       <div className="flex flex-col gap-1">
                         <span className="text-xl md:text-2xl font-serif text-white">10 Yr</span>
                         <span className="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold text-[#d89a5b]">Carpentry Warranty</span>
@@ -452,7 +461,7 @@ const Index = () => {
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
@@ -505,7 +514,7 @@ const Index = () => {
             </motion.p>
             <div className="flex items-center w-full max-w-2xl">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#d89a5b]/40" />
-              <h2 className="px-8 text-3xl md:text-5xl font-brand text-[#002121] tracking-[0.2em] uppercase text-center whitespace-nowrap">
+              <h2 className="px-3 sm:px-8 text-[22px] sm:text-3xl md:text-5xl font-brand text-[#002121] tracking-[0.1em] md:tracking-[0.2em] uppercase text-center md:whitespace-nowrap whitespace-normal leading-tight">
                 Package Offers
               </h2>
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#d89a5b]/40" />
@@ -752,27 +761,27 @@ const Index = () => {
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-center">
             {/* Left Column: Visuals */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="order-2 lg:order-1 relative w-full"
             >
               <div className="absolute -inset-4 border border-[#d89a5b]/10 -z-10 translate-x-4 translate-y-4" />
-              <BeforeAfterSlider 
+              <BeforeAfterSlider
                 beforeImage="/before.webp"
                 afterImage="/after.webp"
                 brandName="SA"
                 className="shadow-[0_40px_100px_rgba(0,0,0,0.08)]"
               />
-              
+
               {/* Floating Statistic or Design Note */}
               <div className="absolute -bottom-10 -right-6 bg-[#002121] text-white p-8 hidden md:block shadow-2xl">
                 <p className="text-[10px] tracking-[0.3em] uppercase opacity-60 mb-2">Project Success</p>
                 <p className="text-3xl font-sans font-light tracking-tighter">100%<span className="text-[14px] ml-1 tracking-normal opacity-40">Precision</span></p>
               </div>
             </motion.div>
-            
+
             {/* Right Column: Content */}
             <div className="order-1 lg:order-2">
               <div className="max-w-xl">
@@ -782,22 +791,22 @@ const Index = () => {
                   transition={{ duration: 0.8 }}
                   className="mb-10"
                 >
-                  
-                  
+
+
                   <h2 className="text-5xl md:text-7xl font-sans font-light text-[#002121] leading-[1.1] mb-8 tracking-tighter">
                     Turning Visions <br />
                     <span className="font-medium text-[#d89a5b]">Into Livable Art.</span>
                   </h2>
-                  
-                  
-                  
+
+
+
                   <p className="text-gray-500 text-lg leading-[1.8] mb-12 font-sans font-normal opacity-90 max-w-lg">
                     Witness the seamless evolution of a space. At SA Interiors, we specialize in high-end transformations that balance aesthetic grandeur with functional precision.
                   </p>
                 </motion.div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
@@ -809,8 +818,8 @@ const Index = () => {
                     </div>
                     <p className="text-[13px] text-gray-400 leading-relaxed pl-9 group-hover:text-gray-600 transition-colors">Bespoke home interiors crafted for luxury living.</p>
                   </motion.div>
-                  
-                  <motion.div 
+
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
@@ -834,7 +843,7 @@ const Index = () => {
                     className="relative px-12 py-5 bg-[#002121] text-white text-[11px] font-black tracking-[0.25em] uppercase hover:bg-white hover:text-[#002121] border border-transparent hover:border-[#002121] transition-all duration-500 group overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center gap-4">
-                      Explore Portfolio 
+                      Explore Portfolio
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
                     </span>
                     <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
@@ -849,7 +858,7 @@ const Index = () => {
       {/* Why Choose Us Section - Wide Minimalist UI */}
       <section className="pt-16 pb-20 bg-white relative overflow-hidden">
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
-          
+
           <div className="mb-20">
             <motion.h2
               initial={{ opacity: 0, x: -20 }}
@@ -924,72 +933,80 @@ const Index = () => {
               What Our Clients <span className="font-medium">Say About Us</span>
             </h2>
             <div className="flex items-center justify-center gap-4 mb-20 text-[#d89a5b]">
-              
+
             </div>
           </ScrollReveal>
 
-          <Swiper
-            modules={[Autoplay]}
-            spaceBetween={40}
-            slidesPerView={1}
-            autoplay={{ delay: 5000, disableOnInteraction: false }}
-            loop={true}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            className="pb-20"
-          >
-            {testimonials.map((item) => (
-              <SwiperSlide key={item.id}>
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  className="bg-white p-12 border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)] group hover:shadow-[0_20px_60px_rgba(0,0,0,0.05)] transition-all duration-700 h-full flex flex-col"
-                >
-                  {/* Image Frame - Luxury Architectural Style */}
-                  <div className="relative w-28 h-28 mx-auto mb-10 group-hover:scale-110 transition-transform duration-700">
-                    <div className="absolute inset-0 border border-[#d89a5b]/30 rounded-full -m-2 group-hover:rotate-180 transition-transform duration-[2s]" />
-                    <div className="w-full h-full rounded-full overflow-hidden border-2 border-white shadow-xl">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700"
-                      />
-                    </div>
-                    {/* Floating Quote Icon */}
-                    <div className="absolute -bottom-2 -right-2 bg-[#002121] text-white w-10 h-10 flex items-center justify-center rounded-full shadow-lg border-4 border-white">
-                      <MessageSquare size={16} className="text-[#d89a5b]" />
-                    </div>
-                  </div>
+          <div className="relative group/slider px-2 md:px-0 pb-16 md:pb-0">
+            {/* Custom Navigation */}
+            <button className="swiper-prev absolute bottom-0 md:bottom-auto top-auto md:top-1/2 left-1/2 md:left-0 -translate-x-[110%] md:translate-x-0 md:-translate-y-1/2 md:-ml-8 z-20 w-12 h-12 md:w-16 md:h-16 rounded-none bg-[#d89a5b] flex items-center justify-center text-[#002121] hover:bg-[#002121] hover:text-[#d89a5b] hover:shadow-xl transition-all shadow-lg">
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />
+            </button>
+            <button className="swiper-next absolute bottom-0 md:bottom-auto top-auto md:top-1/2 right-1/2 md:right-0 translate-x-[110%] md:translate-x-0 md:-translate-y-1/2 md:-mr-8 z-20 w-12 h-12 md:w-16 md:h-16 rounded-none bg-[#d89a5b] flex items-center justify-center text-[#002121] hover:bg-[#002121] hover:text-[#d89a5b] hover:shadow-xl transition-all shadow-lg">
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />
+            </button>
 
-                  {/* Review Content */}
-                  <div className="flex-1">
-                    <p className="text-gray-500 text-[15px] leading-relaxed italic mb-10 opacity-80 group-hover:opacity-100 transition-opacity">
-                      "{item.review}"
-                    </p>
-                  </div>
+            <Swiper
+              modules={[Autoplay, Navigation]}
+              navigation={{
+                prevEl: '.swiper-prev',
+                nextEl: '.swiper-next',
+              }}
+              spaceBetween={24}
+              slidesPerView={1}
+              autoplay={{ delay: 5000, disableOnInteraction: false }}
+              loop={true}
+              breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
+              }}
+              className="pb-10 pt-4"
+            >
+              {testimonials.map((item) => (
+                <SwiperSlide key={item.id}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="relative w-full h-[380px] md:h-[420px] overflow-hidden group cursor-pointer"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                    />
 
-                  {/* Client Name */}
-                  <div className="pt-8 border-t border-gray-50">
-                    <h3 className="text-[#002121] font-bold text-[13px] tracking-[0.2em] uppercase mb-1">
-                      {item.name}
-                    </h3>
-                    <p className="text-[10px] text-[#d89a5b] font-medium tracking-[0.3em] uppercase opacity-60">Verified Owner</p>
-                  </div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                    {/* Dark gradient overlay covering the whole image smoothly */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/60 opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {/* Content */}
+                    <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-between z-10 text-left">
+                      <div>
+                        <h3 className="text-white font-sans font-bold text-xl md:text-2xl mb-1 drop-shadow-md">
+                          {item.name}
+                        </h3>
+                        <p className="text-[#d89a5b] text-[10px] tracking-[0.3em] uppercase font-bold drop-shadow-sm">Verified Owner</p>
+                      </div>
+
+                      <div>
+                        <div className="mb-4">
+                          <MessageSquare className="w-8 h-8 text-white/30" />
+                        </div>
+                        <p className="text-white/90 text-sm md:text-[15px] leading-relaxed italic font-light drop-shadow-sm">
+                          "{item.review}"
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </section>
 
       {/* Interactive Interior Style Quiz */}
       <section id="quiz" className="pt-2 pb-10 bg-white relative overflow-hidden">
-        {/* Decorative Grid Background */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-          <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(#002121 1px, transparent 1px), linear-gradient(90deg, #002121 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
-        </div>
 
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <QuizComponent />
@@ -1000,7 +1017,7 @@ const Index = () => {
       <section className="pt-10 pb-20 bg-white relative overflow-hidden border-t border-gray-50">
         {/* Decorative architectural line */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-20 bg-gradient-to-b from-[#d89a5b] to-transparent" />
-        
+
         <div className="container mx-auto px-6 relative z-10 text-center">
           <ScrollReveal>
             <h2 className="text-5xl md:text-[70px] font-sans font-light text-[#002121] mb-8 tracking-tighter leading-[1.1]">
@@ -1011,9 +1028,9 @@ const Index = () => {
               Get a free consultation and a design plan crafted just for you, <br className="hidden md:block" />
               <span className="text-[#d89a5b] font-medium italic">within 24 hours.</span>
             </p>
-            
-            <Link 
-              to="/contact" 
+
+            <Link
+              to="/contact"
               className="group relative inline-flex items-center gap-6 bg-[#002121] text-white px-14 py-6 text-[11px] font-black tracking-[0.3em] uppercase hover:bg-[#d89a5b] transition-all duration-700 shadow-[0_20px_60px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_60px_rgba(216,154,91,0.2)]"
             >
               <span className="relative z-10">Get Started for Free</span>
@@ -1109,14 +1126,23 @@ const Index = () => {
 
               {/* Footer Buttons */}
               <div className="bg-white border-t border-gray-100 p-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                  <button className="flex items-center justify-center gap-4 py-5 border-2 border-gray-100 text-[#002121] hover:border-[#8B2323] hover:text-[#8B2323] transition-all text-[11px] font-black tracking-[0.2em] uppercase">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                  <button 
+                    onClick={() => {
+                      setSelectedPackage(null);
+                      window.dispatchEvent(new CustomEvent("openConsultation"));
+                    }}
+                    className="flex items-center justify-center gap-4 py-5 border-2 border-gray-100 text-[#002121] hover:border-[#8B2323] hover:text-[#8B2323] transition-all text-[11px] font-black tracking-[0.2em] uppercase"
+                  >
                     Questions?
                   </button>
-                  <button className="flex items-center justify-center gap-4 py-5 border-2 border-gray-100 text-[#002121] hover:border-[#8B2323] hover:text-[#8B2323] transition-all text-[11px] font-black tracking-[0.2em] uppercase">
-                    View Video
-                  </button>
-                  <button className="flex items-center justify-center gap-4 py-5 bg-[#002121] text-white hover:bg-[#8B2323] transition-all text-[11px] font-black tracking-[0.2em] uppercase px-8">
+                  <button 
+                    onClick={() => {
+                      setSelectedPackage(null);
+                      window.dispatchEvent(new CustomEvent("openConsultation"));
+                    }}
+                    className="flex items-center justify-center gap-4 py-5 bg-[#002121] text-white hover:bg-[#8B2323] transition-all text-[11px] font-black tracking-[0.2em] uppercase px-8"
+                  >
                     Talk to Designer
                   </button>
                 </div>

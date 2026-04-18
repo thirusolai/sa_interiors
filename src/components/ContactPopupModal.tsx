@@ -58,9 +58,9 @@ const ContactPopupModal: React.FC<ContactPopupModalProps> = ({ isOpen, onClose }
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-50 p-2 md:p-3 bg-[#002121] hover:bg-black text-white rounded-md shadow-md transition-all"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[60] p-2 md:p-3 bg-[#002121] hover:bg-black text-white rounded-md shadow-md transition-all active:scale-95"
             >
-              <X size={20} />
+              <X size={18} className="sm:w-5 sm:h-5" />
             </button>
 
             {/* Left Image / Branding Panel (Optional but adds luxury) */}
@@ -92,15 +92,15 @@ const ContactPopupModal: React.FC<ContactPopupModalProps> = ({ isOpen, onClose }
             </div>
 
             {/* Form Panel */}
-            <div className="w-full md:w-3/5 p-6 sm:p-8 md:p-10 lg:p-12 max-h-[85vh] overflow-y-auto custom-scrollbar">
-              <div className="mb-8">
-                <h2 className="text-3xl md:text-4xl text-[#002121] font-bold mb-3" style={{ fontFamily: 'Calibri, sans-serif' }}>Book a Free Consultation</h2>
-                <p className="text-gray-500 text-sm md:text-base leading-relaxed">
+            <div className="w-full md:w-3/5 p-5 sm:p-8 md:p-10 lg:p-12 max-h-[90vh] md:max-h-[85vh] overflow-y-auto custom-scrollbar">
+              <div className="mb-8 pr-10 md:pr-0">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#002121] font-bold mb-2 md:mb-3" style={{ fontFamily: 'Calibri, sans-serif' }}>Book a Free Consultation</h2>
+                <p className="text-gray-500 text-xs sm:text-sm md:text-base leading-relaxed">
                   Tell us about your space. We will get back to you within 24 hours.
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                 {/* 1. You Are */}
                 <div className="space-y-3">
                   <label className="text-xs font-bold text-gray-400 uppercase tracking-widest block">You are</label>
@@ -200,25 +200,25 @@ const ContactPopupModal: React.FC<ContactPopupModalProps> = ({ isOpen, onClose }
                   </div>
 
                   {/* Phone */}
-                  <div className="flex gap-3">
-                    <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-4 flex items-center justify-center text-gray-500 font-medium">
+                  <div className="flex gap-2 sm:gap-3 w-full">
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl w-[50px] sm:w-[70px] py-3 sm:py-4 flex items-center justify-center text-gray-500 font-medium text-sm sm:text-base shrink-0">
                       +91
                     </div>
                     <input
                       required
                       type="tel"
-                      placeholder="Your Mobile Number"
+                      placeholder="Mobile Number"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="flex-1 bg-gray-50 border border-gray-200 text-[#002121] rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-[#d89a5b]/50 focus:border-[#d89a5b] transition-all placeholder:text-gray-400"
+                      className="flex-1 min-w-0 bg-gray-50 border border-gray-200 text-[#002121] rounded-xl px-4 sm:px-5 py-3 sm:py-4 focus:outline-none focus:ring-2 focus:ring-[#d89a5b]/50 focus:border-[#d89a5b] transition-all placeholder:text-gray-400 text-sm sm:text-base"
                     />
                   </div>
                 </div>
 
-                {/* WhatsApp Checkbox */}
-                <label className="flex items-center gap-3 cursor-pointer group select-none py-2">
+                 {/* WhatsApp Checkbox */}
+                <label className="flex items-start sm:items-center gap-3 cursor-pointer group select-none py-1">
                   <div
-                    className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${
+                    className={`mt-0.5 sm:mt-0 w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center transition-all shrink-0 ${
                       whatsappUpdates ? "bg-[#25D366] border-[#25D366]" : "bg-white border-2 border-gray-300"
                     }`}
                   >
@@ -228,10 +228,10 @@ const ContactPopupModal: React.FC<ContactPopupModalProps> = ({ isOpen, onClose }
                       checked={whatsappUpdates}
                       onChange={() => setWhatsappUpdates(!whatsappUpdates)}
                     />
-                    {whatsappUpdates && <CheckCircle2 size={16} className="text-white" />}
+                    {whatsappUpdates && <CheckCircle2 size={14} className="text-white sm:hidden" /> || whatsappUpdates && <CheckCircle2 size={16} className="text-white hidden sm:block" />}
                   </div>
-                  <span className="text-sm text-gray-600 font-medium flex items-center gap-2">
-                    Send me updates on WhatsApp <MessageSquare size={16} className="text-[#25D366]" />
+                  <span className="text-[13px] sm:text-sm text-gray-600 font-medium leading-tight sm:leading-normal">
+                    Send me updates on WhatsApp <MessageSquare size={14} className="text-[#25D366] inline-block ml-1 align-sub" />
                   </span>
                 </label>
 
@@ -239,9 +239,9 @@ const ContactPopupModal: React.FC<ContactPopupModalProps> = ({ isOpen, onClose }
                 <div className="pt-4">
                   <button
                     type="submit"
-                    className="w-full bg-[#002121] hover:bg-[#d89a5b] text-white rounded-xl py-4 sm:py-5 text-sm sm:text-base font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-3 shadow-xl active:scale-[0.98]"
+                    className="w-full bg-[#002121] hover:bg-[#d89a5b] text-white rounded-xl py-4 sm:py-5 px-6 text-xs sm:text-sm md:text-base font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-3 shadow-xl active:scale-[0.98] leading-tight text-center"
                   >
-                    Get My Free Consultation <ArrowRight size={20} />
+                    <span className="flex-1">Get My Free Consultation</span> <ArrowRight size={18} className="shrink-0" />
                   </button>
                   
                   <p className="text-center mt-4 text-xs text-gray-400 font-medium">

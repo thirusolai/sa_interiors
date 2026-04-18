@@ -6,10 +6,10 @@ const Footer = () => {
     <footer className="bg-[#002121] text-white pt-24 pb-12 font-sans overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-8">
         {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16 lg:gap-8 mb-20">
           
           {/* Column 1: Brand & Social */}
-          <div className="space-y-10">
+          <div className="col-span-2 lg:col-span-1 space-y-10">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-[#d89a5b] rounded-sm flex items-center justify-center">
                 <span className="text-white font-black text-xl">SA</span>
@@ -36,30 +36,42 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Navigation</h4>
+            <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Our Company</h4>
             <ul className="space-y-4">
-              {['Home', 'Interiors', 'Materials', 'Lighting', 'Store Locator'].map((item) => (
-                <li key={item}>
-                  <Link to="#" className="text-white/60 hover:text-white transition-colors text-[15px] font-light tracking-wide">{item}</Link>
+              {[
+                { name: 'About', path: '/about' },
+                { name: 'Manufacturing', path: '/about#manufacturing' },
+                { name: 'Testimonial', path: '/testimonials' },
+                { name: 'Blog', path: '/blog' },
+                { name: 'Contact', path: '/contact' }
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link to={item.path} className="text-white/60 hover:text-white transition-colors text-[15px] font-light tracking-wide">{item.name}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 3: Company */}
+          {/* Column 3: Products */}
           <div>
-            <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Our Company</h4>
+            <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Products</h4>
             <ul className="space-y-4">
-              {['About Us', 'Franchise', 'Affiliate Partner', 'Contact Us', 'Privacy Policy'].map((item) => (
-                <li key={item}>
-                  <Link to="#" className="text-white/60 hover:text-white transition-colors text-[15px] font-light tracking-wide">{item}</Link>
+              {[
+                { name: "Civil & Electrical", path: "/products#civil" },
+                { name: "False ceiling", path: "/products#ceiling" },
+                { name: "Painting", path: "/products#painting" },
+                { name: "Flooring", path: "/products#flooring" },
+                { name: "Custom Furnitures", path: "/products#furniture" }
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link to={item.path} className="text-white/60 hover:text-white transition-colors text-[15px] font-light tracking-wide block leading-snug">{item.name}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Column 4: Contact */}
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Contact Us</h4>
             <div className="space-y-8">
               <div className="space-y-2">

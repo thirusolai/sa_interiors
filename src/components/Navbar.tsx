@@ -5,7 +5,12 @@ import { ChevronDown, Menu, X } from "lucide-react";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const dropdownTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const toggleMobileExpanded = (key: string) => {
+    setMobileExpanded(prev => prev === key ? null : key);
+  };
 
   const handleDropdownEnter = (dropdown: string) => {
     if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
@@ -22,12 +27,11 @@ const Navbar = () => {
 
   const navLinks = {
     commercial: [
-      
-      { name: "Restaurants & Food courts", path: "/" },
-      { name: "Resorts & hotels", path: "/" },
-      { name: "Schools & Play Space Interiors", path: "/" },
-      { name: "Office interiors", path: "/" },
-      { name: "Events & banquets", path: "/" },
+      { name: "Restaurants & Food courts", path: "/portfolio?category=Restaurants%20%26%20Food%20courts" },
+      { name: "Resorts & hotels", path: "/portfolio?category=Resorts%20%26%20hotels" },
+      { name: "Schools & Play Space Interiors", path: "/portfolio?category=Schools%20%26%20Play%20Space%20Interiors" },
+      { name: "Office interiors", path: "/portfolio?category=Office%20interiors" },
+      { name: "Events & banquets", path: "/portfolio?category=Events%20%26%20banquets" },
     ],
     products: [
       { name: "Civil, Electrical & Plumbing", path: "/products#civil" },
@@ -77,9 +81,9 @@ const Navbar = () => {
               onMouseEnter={() => handleDropdownEnter('commercial')}
               onMouseLeave={handleDropdownLeave}
             >
-              <div className="flex items-center gap-1.5 hover:text-[#d89a5b] transition-all cursor-pointer">
+              <Link to="/portfolio?category=Commercial" className="flex items-center gap-1.5 hover:text-[#d89a5b] transition-all cursor-pointer">
                 Commercial <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === 'commercial' ? 'rotate-180' : ''}`} />
-              </div>
+              </Link>
 
               <div className={`fixed top-[72px] left-0 right-0 bg-[#002121] border-t border-white/5 shadow-2xl z-[60] transition-all duration-300 ${activeDropdown === 'commercial' ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}
                 onMouseEnter={() => handleDropdownEnter('commercial')}
@@ -170,45 +174,81 @@ const Navbar = () => {
       </header>
 
       {/* MOBILE MENU OVERLAY */}
-      <div className={`fixed inset-0 bg-[#002121] z-[60] flex flex-col p-10 transition-transform duration-500 xl:hidden overflow-y-auto ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex justify-between items-center mb-16">
-          <span className="text-2xl font-brand tracking-[0.2em] uppercase font-bold">SA interiors</span>
-          <button onClick={() => setMenuOpen(false)}><X size={40} /></button>
+      <div className={`fixed inset-0 bg-[#002121] text-white z-[60] flex flex-col p-10 transition-transform duration-500 xl:hidden overflow-y-auto ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex justify-between items-center gap-6 mb-12 border-b border-white/10 pb-6 w-full">
+          <Link to="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 shrink-0 overflow-hidden">
+            <div className="w-8 h-8 flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 40 40" fill="none" stroke="#d89a5b" strokeWidth="2" className="w-full h-full">
+                <rect x="5" y="5" width="30" height="30" />
+                <path d="M10 35V15C10 10 15 5 20 5C25 5 30 10 30 15V35" />
+                <line x1="15" y1="35" x2="15" y2="10" />
+                <line x1="25" y1="35" x2="25" y2="10" />
+                <line x1="20" y1="35" x2="20" y2="5" />
+              </svg>
+            </div>
+            <span className="text-[17px] sm:text-lg font-brand tracking-[0.2em] uppercase font-bold text-white whitespace-nowrap">SA interiors</span>
+          </Link>
+          <button onClick={() => setMenuOpen(false)} className="w-10 h-10 flex items-center justify-center border border-white/10 hover:border-[#d89a5b] text-white hover:text-[#d89a5b] transition-all bg-[#001c1c] shrink-0">
+            <X size={22} strokeWidth={1.5} />
+          </button>
         </div>
         
-        <div className="flex flex-col gap-10 font-serif">
-          <Link to="/home_interior" className="text-3xl border-b border-white/10 pb-4" onClick={() => setMenuOpen(false)}>Home Interiors</Link>
-          <Link to="/kitchen-wardrobe" className="text-3xl border-b border-white/10 pb-4" onClick={() => setMenuOpen(false)}>Kitchen & Wardrobe</Link>
+        <div className="flex flex-col gap-6 font-serif mb-12">
+          <Link to="/home_interior" className="text-3xl border-b border-white/10 pb-4 hover:text-[#d89a5b] transition-colors" onClick={() => setMenuOpen(false)}>Home Interiors</Link>
+          <Link to="/kitchen-wardrobe" className="text-3xl border-b border-white/10 pb-4 hover:text-[#d89a5b] transition-colors" onClick={() => setMenuOpen(false)}>Kitchen & Wardrobe</Link>
           
-          <div className="flex flex-col gap-5">
-            <span className="text-sm tracking-widest text-[#d89a5b] font-sans font-bold uppercase">Commercial</span>
-            {navLinks.commercial.map(item => (
-              <Link key={item.name} to={item.path} className="text-2xl pl-4" onClick={() => setMenuOpen(false)}>{item.name}</Link>
-            ))}
+          <div className="flex flex-col border-b border-white/10 pb-4">
+            <button 
+              className="flex justify-between items-center text-3xl font-serif text-white hover:text-[#d89a5b] transition-colors text-left"
+              onClick={() => toggleMobileExpanded('commercial')}
+            >
+              Commercial
+              <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${mobileExpanded === 'commercial' ? 'rotate-180 text-[#d89a5b]' : 'text-white/50'}`} />
+            </button>
+            <div className={`flex flex-col gap-4 overflow-hidden transition-all duration-300 ${mobileExpanded === 'commercial' ? 'mt-6 max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              {navLinks.commercial.map(item => (
+                <Link key={item.name} to={item.path} className="text-[19px] pl-4 text-white/70 hover:text-white transition-colors" onClick={() => setMenuOpen(false)}>{item.name}</Link>
+              ))}
+            </div>
           </div>
 
-          <Link to="/portfolio" className="text-3xl border-b border-white/10 pb-4" onClick={() => setMenuOpen(false)}>Portfolio</Link>
+          <Link to="/portfolio" className="text-3xl border-b border-white/10 pb-4 hover:text-[#d89a5b] transition-colors" onClick={() => setMenuOpen(false)}>Portfolio</Link>
 
-          <div className="flex flex-col gap-5">
-            <span className="text-sm tracking-widest text-[#d89a5b] font-sans font-bold uppercase">Products</span>
-            {navLinks.products.map(item => (
-              <Link key={item.name} to={item.path} className="text-2xl pl-4" onClick={() => setMenuOpen(false)}>{item.name}</Link>
-            ))}
+          <div className="flex flex-col border-b border-white/10 pb-4">
+            <button 
+              className="flex justify-between items-center text-3xl font-serif text-white hover:text-[#d89a5b] transition-colors text-left"
+              onClick={() => toggleMobileExpanded('products')}
+            >
+              Products
+              <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${mobileExpanded === 'products' ? 'rotate-180 text-[#d89a5b]' : 'text-white/50'}`} />
+            </button>
+            <div className={`flex flex-col gap-4 overflow-hidden transition-all duration-300 ${mobileExpanded === 'products' ? 'mt-6 max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              {navLinks.products.map(item => (
+                <Link key={item.name} to={item.path} className="text-[19px] pl-4 text-white/70 hover:text-white transition-colors" onClick={() => setMenuOpen(false)}>{item.name}</Link>
+              ))}
+            </div>
           </div>
 
-          <div className="flex flex-col gap-5">
-            <span className="text-sm tracking-widest text-[#d89a5b] font-sans font-bold uppercase">Our Company</span>
-            {navLinks.company.map(item => (
-              <Link key={item.name} to={item.path} className="text-2xl pl-4" onClick={() => setMenuOpen(false)}>{item.name}</Link>
-            ))}
+          <div className="flex flex-col border-b border-white/10 pb-4">
+            <button 
+              className="flex justify-between items-center text-3xl font-serif text-white hover:text-[#d89a5b] transition-colors text-left"
+              onClick={() => toggleMobileExpanded('company')}
+            >
+              Our Company
+              <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${mobileExpanded === 'company' ? 'rotate-180 text-[#d89a5b]' : 'text-white/50'}`} />
+            </button>
+            <div className={`flex flex-col gap-4 overflow-hidden transition-all duration-300 ${mobileExpanded === 'company' ? 'mt-6 max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              {navLinks.company.map(item => (
+                <Link key={item.name} to={item.path} className="text-[19px] pl-4 text-white/70 hover:text-white transition-colors" onClick={() => setMenuOpen(false)}>{item.name}</Link>
+              ))}
+            </div>
           </div>
         </div>
-
 
         <Link
           to="/contact"
           onClick={() => setMenuOpen(false)}
-          className="w-full bg-[#965b32] text-white py-6 rounded-full text-center text-sm font-black tracking-[0.4em] uppercase shrink-0"
+          className="mt-auto w-full bg-[#965b32] text-white py-6 rounded-none text-center text-xs font-black tracking-[0.4em] uppercase shrink-0 transition-transform hover:scale-[1.02]"
         >
           Talk to us
         </Link>

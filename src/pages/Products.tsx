@@ -170,25 +170,26 @@ const Products = () => {
         </ScrollReveal>
 
         {/* Deck of Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        <div className="flex lg:grid lg:grid-cols-5 gap-4 mb-8 overflow-x-auto pb-8 pt-4 -mx-6 px-6 lg:mx-0 lg:px-0 snap-x scroll-smooth scroll-pl-6 lg:scroll-pl-0 items-stretch">
+          
           {productsData.map((product) => (
             <button
               key={product.id}
               onClick={() => setActiveProductId(product.id)}
-              className={`flex flex-col text-left rounded-2xl overflow-hidden transition-all duration-500 ${
+              className={`flex-shrink-0 w-[160px] lg:w-auto snap-start flex flex-col text-left rounded-2xl overflow-hidden transition-all duration-500 ${
                 activeProductId === product.id
                   ? "ring-2 ring-[#d89a5b] shadow-xl shadow-[#d89a5b]/10 transform -translate-y-1 bg-white"
                   : "bg-slate-50 hover:bg-white hover:shadow-lg opacity-80 hover:opacity-100"
               }`}
             >
-              <div className="h-40 w-full overflow-hidden">
+              <div className="h-32 lg:h-40 w-full overflow-hidden">
                 <img 
                   src={product.deckImage} 
                   alt={product.title} 
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                 />
               </div>
-              <div className="p-5 flex flex-col justify-between flex-grow">
+              <div className="p-4 lg:p-5 flex flex-col justify-between flex-grow">
                 <div>
                   <span className={`text-sm font-bold block mb-1 ${activeProductId === product.id ? "text-[#d89a5b]" : "text-slate-400"}`}>
                     {product.number}
@@ -203,16 +204,19 @@ const Products = () => {
               </div>
             </button>
           ))}
+          
+          {/* Trailing Mobile Spacer */}
+          <div className="flex-shrink-0 w-2 lg:hidden"></div>
         </div>
 
         {/* Details Section */}
-        <div className="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 rounded-[2rem] overflow-hidden mt-6">
+        <div className="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 rounded-2xl md:rounded-[2rem] overflow-hidden mt-6">
           
           {/* Tabs */}
-          <div className="flex border-b border-slate-100 bg-white px-4 md:px-8">
+          <div className="flex border-b border-slate-100 bg-white md:px-8">
             <button
               onClick={() => setActiveTab("overview")}
-              className={`px-8 py-6 text-[13px] font-bold tracking-[0.15em] uppercase transition-all duration-300 relative ${
+              className={`flex-1 md:flex-none px-4 md:px-8 py-5 md:py-6 text-[12px] md:text-[13px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase transition-all duration-300 relative text-center ${
                 activeTab === "overview" ? "text-[#002121]" : "text-slate-400 hover:text-slate-700"
               }`}
             >
@@ -223,7 +227,7 @@ const Products = () => {
             </button>
             <button
               onClick={() => setActiveTab("pricing")}
-              className={`px-8 py-6 text-[13px] font-bold tracking-[0.15em] uppercase transition-all duration-300 relative ${
+              className={`flex-1 md:flex-none px-4 md:px-8 py-5 md:py-6 text-[12px] md:text-[13px] font-bold tracking-[0.1em] md:tracking-[0.15em] uppercase transition-all duration-300 relative text-center ${
                 activeTab === "pricing" ? "text-[#002121]" : "text-slate-400 hover:text-slate-700"
               }`}
             >
@@ -235,7 +239,7 @@ const Products = () => {
           </div>
 
           {/* Content Area */}
-          <div className="p-8 lg:p-12">
+          <div className="p-6 md:p-8 lg:p-12">
             
             {activeTab === "overview" && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 animate-fade-in">
@@ -245,7 +249,7 @@ const Products = () => {
                     <span className="w-8 h-[1px] bg-[#d89a5b]"></span>
                     {activeProduct.eyebrow}
                   </p>
-                  <h2 className="text-4xl md:text-5xl font-serif text-[#002121] mb-8 leading-tight">
+                  <h2 className="text-[28px] sm:text-4xl md:text-5xl font-serif text-[#002121] mb-6 md:mb-8 leading-tight">
                     {activeProduct.title}
                   </h2>
                   <p className="text-slate-500 text-lg font-light leading-[1.8] mb-10">
@@ -265,7 +269,7 @@ const Products = () => {
                 </div>
                 
                 {/* Image */}
-                <div className="relative w-full h-[400px] lg:h-auto overflow-hidden rounded-3xl shadow-xl">
+                <div className="relative w-full h-[280px] sm:h-[400px] lg:h-auto lg:min-h-[500px] overflow-hidden rounded-xl md:rounded-3xl shadow-xl mt-4 md:mt-0">
                   <img 
                     src={activeProduct.overviewImage} 
                     alt={activeProduct.title} 
