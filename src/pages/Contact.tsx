@@ -79,10 +79,10 @@ const Contact = () => {
               <h2 className="text-3xl font-serif mb-8">Contact Information</h2>
               <div className="space-y-6 mb-10">
                 {[
-                  { icon: Phone, title: "Phone", lines: ["+91 99999999", "+91 44 444444"] },
-                  { icon: Mail, title: "Email", lines: ["info@sainterior.in", ""] },
-                  { icon: MapPin, title: "Studio Address", lines: [", ", ""] },
-                  { icon: Clock, title: "Working Hours", lines: ["Mon – Sat: 9:00 AM – 7:00 PM", "Sun: By Appointment"] },
+                  { icon: Phone, title: "Phone Number", lines: ["+91 99999999", "+91 44 444444"] },
+                  { icon: Mail, title: "Email", lines: ["info@sainterior.in"] },
+                  { icon: MapPin, title: "Studio Address", lines: ["Shop no.5, Hameedia Complex, 203, Triplicane High Rd", "Ellis Puram, Police Quarters, Triplicane, Chennai, Tamil Nadu 600005"], link: "https://share.google/rzjwVGt6zWXxbI761" },
+                  { icon: Clock, title: "Working Hours", lines: ["Mon- sat 9:00 AM -7:00 PM", "Sun: By Appointment"] },
                 ].map((item) => (
                   <div key={item.title} className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -90,9 +90,17 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
-                      {item.lines.map((line) => (
-                        <p key={line} className="text-muted-foreground text-sm">{line}</p>
-                      ))}
+                      {item.link ? (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                          {item.lines.map((line) => (
+                            <p key={line} className="text-muted-foreground text-sm hover:text-primary transition-colors">{line}</p>
+                          ))}
+                        </a>
+                      ) : (
+                        item.lines.map((line) => (
+                          <p key={line} className="text-muted-foreground text-sm">{line}</p>
+                        ))
+                      )}
                     </div>
                   </div>
                 ))}

@@ -15,7 +15,9 @@ export default {
     extend: {
       fontFamily: {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        sans: ['"Outfit"', 'system-ui', 'sans-serif'],
+        brand: ['"Cinzel"', 'serif'],
+        premium: ['"Outfit"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

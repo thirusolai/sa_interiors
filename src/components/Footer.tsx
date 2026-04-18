@@ -1,96 +1,102 @@
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram, Twitter, Youtube, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#5a3e2b] text-white">
-      <div className="max-w-7xl mx-auto px-8 py-16">
+    <footer className="bg-[#002121] text-white pt-24 pb-12 font-sans overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-8">
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+          
+          {/* Column 1: Brand & Social */}
+          <div className="space-y-10">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-[#d89a5b] rounded-sm flex items-center justify-center">
+                <span className="text-white font-black text-xl">SA</span>
+              </div>
+              <h2 className="text-2xl font-bold tracking-[0.2em] uppercase">Interiors</h2>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              {[Facebook, Instagram, Linkedin, Twitter].map((Icon, i) => (
+                <a 
+                  key={i} 
+                  href="#" 
+                  className="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-[#002121] transition-all duration-500"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
 
-        {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <p className="text-white/50 text-sm leading-[1.8] max-w-sm font-light">
+              Crafting poetic living spaces where every element recites a story. Pursuing European standards in quality and design, making every home a personalized masterpiece.
+            </p>
+          </div>
 
-          {/* Column 1 - Services */}
+          {/* Column 2: Quick Links */}
           <div>
-            <h2 className="text-2xl font-serif mb-6">SA Interior</h2>
-
-            <h4 className="font-medium mb-4">Services</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li>Residential Design</li>
-              <li>Commercial Interiors</li>
-              <li>Luxury Spaces</li>
-              <li>Space Planning</li>
-              <li>3D Visualization</li>
-              <li>Interior Renovation</li>
+            <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Navigation</h4>
+            <ul className="space-y-4">
+              {['Home', 'Interiors', 'Materials', 'Lighting', 'Store Locator'].map((item) => (
+                <li key={item}>
+                  <Link to="#" className="text-white/60 hover:text-white transition-colors text-[15px] font-light tracking-wide">{item}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 2 - Get in Touch */}
+          {/* Column 3: Company */}
           <div>
-            <h4 className="font-medium mb-6">Get in touch</h4>
+            <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Our Company</h4>
+            <ul className="space-y-4">
+              {['About Us', 'Franchise', 'Affiliate Partner', 'Contact Us', 'Privacy Policy'].map((item) => (
+                <li key={item}>
+                  <Link to="#" className="text-white/60 hover:text-white transition-colors text-[15px] font-light tracking-wide">{item}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div className="space-y-4 text-sm text-white/80">
-              <div>
-                <p className="mb-1">Email Support</p>
-                <p className="text-white">hello@domain.tld</p>
+          {/* Column 4: Contact */}
+          <div>
+            <h4 className="text-[12px] tracking-[0.4em] uppercase font-black text-[#d89a5b] mb-10">Contact Us</h4>
+            <div className="space-y-8">
+              <div className="space-y-2">
+                <p className="text-white/40 text-[11px] uppercase tracking-widest font-medium">Call us at</p>
+                <a href="tel:080-69662251" className="text-xl font-medium tracking-tight hover:text-[#d89a5b] transition-colors block">080-69662251</a>
+              </div>
+              
+              <div className="space-y-2">
+                <p className="text-white/40 text-[11px] uppercase tracking-widest font-medium">Write to us</p>
+                <a href="mailto:hello@sainteriors.com" className="text-[16px] font-light tracking-wide hover:text-[#d89a5b] transition-colors block">hello@sainteriors.com</a>
               </div>
 
-              <div>
-                <p className="mb-1">Customer Support</p>
-                <p className="text-white">(888) 4000-2424</p>
+              <div className="space-y-2">
+                <p className="text-white/40 text-[11px] uppercase tracking-widest font-medium">Our Studio</p>
+                <p className="text-white/60 text-[14px] leading-relaxed font-light">
+                  12th Main Road, Anna Nagar West,<br />
+                  Chennai, Tamil Nadu 600040
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Column 3 - Newsletter */}
-          <div>
-            <h4 className="font-medium mb-6">Newsletter</h4>
-            <p className="text-sm text-white/80 mb-6 leading-relaxed">
-              Signup our newsletter to get update information, news, insight or promotions.
-            </p>
-
-            <div className="flex items-center gap-4">
-              <input
-                type="email"
-                placeholder="EMAIL"
-                className="px-4 py-2 bg-transparent border border-white/40 text-white text-sm outline-none w-full"
-              />
-              <button className="px-6 py-2 border border-white rounded-full text-sm hover:bg-white hover:text-[#5a3e2b] transition">
-                SIGN UP →
-              </button>
-            </div>
-
-            <p className="text-xs text-white/60 mt-4">
-              By subscribing, you accepted the our Privacy Policy
-            </p>
-          </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
-
-          {/* Social Icons */}
-          <div className="flex items-center gap-4">
-            <div className="w-9 h-9 flex items-center justify-center border border-white/40 rounded-full">
-              <Facebook size={16} />
-            </div>
-            <div className="w-9 h-9 flex items-center justify-center border border-white/40 rounded-full">
-              <Instagram size={16} />
-            </div>
-            <div className="w-9 h-9 flex items-center justify-center border border-white/40 rounded-full">
-              <Twitter size={16} />
-            </div>
-            <div className="w-9 h-9 flex items-center justify-center border border-white/40 rounded-full">
-              <Youtube size={16} />
-            </div>
-          </div>
-
-          {/* Copyright */}
-          <p className="text-xs text-white/70 text-center">
-            Copyright © 2026 Dafroma. All rights reserved. Powered by MoxCreative.
+        {/* Divider & Copyright */}
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-[11px] text-white/30 tracking-widest uppercase font-medium">
+            © 2026 SA Interiors. All Rights Reserved
           </p>
+          <div className="flex gap-10">
+            <Link to="#" className="text-[10px] text-white/30 tracking-[0.2em] uppercase font-bold hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="#" className="text-[10px] text-white/30 tracking-[0.2em] uppercase font-bold hover:text-white transition-colors">Cookie Policy</Link>
+          </div>
         </div>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+export default Footer;
